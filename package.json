@@ -1,0 +1,12 @@
+{
+   "name":"node-tart",
+   "author": "bradleymeck",
+   "main": "lib/index.js",
+   "version": "0.1.0",
+   "repository": {
+      "type": "git",
+      "url": "git@github.com:bmeck/node-tart.git"
+   },
+   "tags": ["tar"],
+   "description": "A low level TAR file format library"
+}
