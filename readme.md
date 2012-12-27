@@ -27,12 +27,11 @@ Represents the headers of a single record in a tar file.
 
 ## new TarReader(stream)
 
-### TarReader.on('entry', function (headerRecord, getDataStream()) {...})
+### TarReader.on('entry', function (headerRecord, stream) {...})
 
 Event when a record is encountered.
 
-If getDataStream is not called the data for this record will be skipped.
-Backpressure is applied so you will need to buffer data if you want it for future reference yourself.
+Backpressure is applied to the stream so in order to skip content use `stream.resume()`.
 
 ## new TarWriter()
 

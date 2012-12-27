@@ -15,14 +15,9 @@ var writer = new TarWriter();
 //
 // Piping a writer to a reader for simple dogfooding
 //
-new TarReader(writer.stream).on('entry', function (record, getStream) {
+new TarReader(writer.stream).on('entry', function (record, stream) {
   var path = record.get('path');
   console.log('FOUND ENTRY FOR:', path);
-  return;
-  //
-  // We can dump or manipulate the data here, rewrite it if we want to and pipe it to a new writer
-  //
-  var stream = getStream();
   function onData() {
     console.error('DATA:' + stream.read());
   }
