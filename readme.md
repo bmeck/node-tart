@@ -2,7 +2,7 @@
 
 This is a lower level library
 
-## TarRecord
+## TarRecord(headers)
 
 Represents the headers of a single record in a tar file.
 
@@ -18,11 +18,21 @@ Represents the headers of a single record in a tar file.
 * gid - defaults to current
 * mode - defaults to umask
 
+### Common Extended Headers (if matching and needs more space will be upgraded automatically)
+
+* path
+* comment
+* charset
+* SCHILY.ino
+
 ## new TarReader(stream)
 
-### TarReader.on('entry', function (headerRecord, dataStream) {...})
+### TarReader.on('entry', function (headerRecord, getDataStream()) {...})
 
-Event when a record is encountered
+Event when a record is encountered.
+
+If getDataStream is not called the data for this record will be skipped.
+Backpressure is applied so you will need to buffer data if you want it for future reference yourself.
 
 ## new TarWriter()
 

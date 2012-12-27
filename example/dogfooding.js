@@ -5,7 +5,7 @@
 // A simple dogfooding service to pipe data in memory from a writer to a reader
 //
 var fs = require('fs');
-var tart = require('./lib/index.js');
+var tart = require('../lib/index.js');
 var TarWriter = tart.TarWriter;
 var TarReader = tart.TarReader;
 
@@ -15,15 +15,22 @@ var writer = new TarWriter();
 //
 // Piping a writer to a reader for simple dogfooding
 //
-new TarReader(writer.stream).on('entry', function (record, stream) {
+new TarReader(writer.stream).on('entry', function (record, getStream) {
   var path = record.get('path');
   console.log('FOUND ENTRY FOR:', path);
+  return;
   //
   // We can dump or manipulate the data here, rewrite it if we want to and pipe it to a new writer
   //
-  stream.on('data', function (data) {
-    console.log('DATA:', data.toString())
+  var stream = getStream();
+  function onData() {
+    console.error('DATA:' + stream.read());
+  }
+  stream.on('readable', onData);
+  stream.on('end', function () {
+    console.log('END');
   })
+  onData();
 });
 
 var togo = IN_FILES.length;
